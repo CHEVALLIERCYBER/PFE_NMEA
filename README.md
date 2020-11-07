@@ -8,4 +8,6 @@ Executer le script main.py : python3 main.py
 
 Le script entrainement.py et modele.py ne sont là qu'a titre d'indication pour montrer comment est calculé le modèle, qui est déjà enregistré sous la forme du fichier modele.sauv . 
 
+Pour recalculer le modele, il est possible d'executer les scripts modele.py et entrainement.py en utilisant les données d'entrainement extraites du Entrainement.zip 
+
 Le script mim.py utilise ce fichier.
