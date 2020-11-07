@@ -121,7 +121,7 @@ def mim():
                     l_trame.pop()  # on retire la trame leurrée
 
                 if (leurrage and flag_leurrage):
-                        l_vrai_positif.append(1)
+                    l_vrai_positif.append(1)
 
 
                 elif (leurrage and not flag_leurrage):
@@ -149,5 +149,3 @@ def mim():
     print("vrai_negatif:",vrai_negatif)
     print("vrai_positif:",vrai_positif)
     print(nb_leurrage)
-
-mim()
