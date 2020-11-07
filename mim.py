@@ -56,8 +56,8 @@ def mim():
 
             alea = 0#rd.randint(0, 3)
             if (alea == 1):  # modifie aléatoirement des trames, 33% de trames fausses
-                offset_lat=0.0050 + 0.045*rd.random() #entre 10 et 100 yds de lat
-                offset_lon=0.0050 + 0.045*rd.random() #entre 10 et 100 yds de lon
+                offset_lat=0.00050 + 0.0045 # 10  de lat
+                offset_lon=0.00050 + 0.0045 # 10  de lon
                 modif_lat = float(message.data[2]) + offset_lat #
                 modif_lon = float(message.data[4]) + offset_lon
                 message.data[2] = str(modif_lat)
