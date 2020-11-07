@@ -147,7 +147,7 @@ def testeval (clf, clfcap, X_test, X_testcap, brouilvrai, brouilvraicap) :
 # chargement des données du train set
 
 #mettre le bon chemin
-train_dataRMC = open('/home/guillaume/PFE/DATA/RMCbien.json')
+train_dataRMC = open('/home/guillaume/PFE/DATA/dataset_RMC.json')
 
 # normalisation
 dataRMC = loadnprocessRMC(train_dataRMC)
