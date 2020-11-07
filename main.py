@@ -17,7 +17,7 @@ from sklearn import tree
 # on teste le modele sur une capture existante
 
 #test=open("/home/guillaume/PFE/DATA/RMC/test_RMC.json") # capture de trames RMC uniquement
-#test_jamming=open("/home/guillaume/PFE/GNSS_LOG/GPS/01_09_2020_jamming_gps_rmc.log.json")
+
 test=open("/home/guillaume/PFE/DATA/RMC/test_RMC_jamming.json")
 
 test = tr.load(test)
