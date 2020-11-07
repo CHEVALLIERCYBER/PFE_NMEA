@@ -146,6 +146,6 @@ def mim():
 
     print("faux_negatif:",faux_negatif)
     print("faux_positif:",faux_positif)
-    print("vrai_negatif:",vrai_negatif)
+    print("vrai_negatif:",vrai_negatif)  # on réalise les estimations sur 100 captures
     print("vrai_positif:",vrai_positif)
     print(nb_leurrage)
