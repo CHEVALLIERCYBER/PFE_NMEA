@@ -1,3 +1,30 @@
+------------------------------------------------------------------------
+
+#
+
+# @Auteurs : EV2 CHAVELLIER & EV2 LEBIGRE
+
+#
+
+# @Date : 06.11.20
+
+# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+
+# @Cadre : Projet de Fin d'Études
+
+# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+
+#
+
+#------------------------------------------------------------------------
+
+# @Titre : Man in the Middle entre BridgeCommand et OpenCPN
+
+#------------------------------------------------------------------------
+
+# @Description : Ce script écoute sur le port de sortie de BridgeCommand via un socket, intercepte les trames et en modifie certaines à la volée.
+# En parallèle, l'appel au script du module prediction permet de detecter via la méthode statistique si un leurrage a lieu  
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -10,7 +37,7 @@ import pickle as pk
 import traitement as tr # modules externes
 import prediction as pr
 
-N=100
+N=100 # pour l'évaluation des résultats du modele
 
 #lecture tps reel des trames
 
@@ -19,7 +46,7 @@ def mim():
 
     print("loading the model...")
 
-    infile = open("model.sauv", 'rb')
+    infile = open("model.sauv", 'rb') # recupere le modele sauvegard dans le fichier objet model.sauv
     modele = pk.load(infile)
     infile.close()
 
@@ -30,8 +57,8 @@ def mim():
     UDP_PORTrec = 5005
     UDP_PORTenv = 10110
 
-    sockrec = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sockenv = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sockrec = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # socket pour recevoir les données issues de BridgeCommand
+    sockenv = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # socket pour renvoyer les trames vers OpenCPN
     sockrec.bind((UDP_IPrec, UDP_PORTrec))
 
     l_phi,l_g,l_t,l_v,l_trame=[],[],[],[],[]
@@ -56,8 +83,8 @@ def mim():
 
             alea = 0#rd.randint(0, 3)
             if (alea == 1):  # modifie aléatoirement des trames, 33% de trames fausses
-                offset_lat=0.00050 + 0.0045 # 10  de lat
-                offset_lon=0.00050 + 0.0045 # 10  de lon
+                offset_lat=0.00050 + 0.0045 # 10'  de lat
+                offset_lon=0.00050 + 0.0045 # 10'  de lon
                 modif_lat = float(message.data[2]) + offset_lat #
                 modif_lon = float(message.data[4]) + offset_lon
                 message.data[2] = str(modif_lat)
@@ -75,10 +102,10 @@ def mim():
 
             if (trame["lat_dir"] == 'N'):
                 phi_str=(trame["lat"])
-                phi=float(phi_str[0:2])*60 + float(phi_str[2:]) # en minutes d'angle
+                phi=float(phi_str[0:2])*60 + float(phi_str[2:]) # réalise des conversions en minutes d'angle
                 l_phi.append(phi)
                 trame2["phi"]=phi
-            else:
+            else:  # si Phi est négatif 
                 phi_str = (trame["lat"])
                 phi = -float(phi_str[0:2]) * 60 + float(phi_str[2:])  # en minutes de phi
                 l_phi.append(phi)
@@ -86,13 +113,13 @@ def mim():
 
             if (trame["lon_dir"] == 'W'):
                 g_str=(str(trame["lon"]))
-                g=float(g_str[0:3]) * 60 + float(g_str[3:]) # en minute de g
+                g=float(g_str[0:3]) * 60 + float(g_str[3:]) # réalise des conversions en minute de g
                 l_g.append(g)
                 trame2["g"] = g
 
 
             else:
-                g=(-float(g_str[0:3]) * 60 + float(g_str[3:]))
+                g=(-float(g_str[0:3]) * 60 + float(g_str[3:])) # si G est négatif
                 l_g.append(g)
                 trame2["g"] = g
 
@@ -100,14 +127,14 @@ def mim():
             trame2["speed"] = float(trame["spd_over_grnd"])
             l_trame.append(trame2)
 
-            if i>=3:
+            if i>=3: # il faut au moins 3 trames 
                 l_trame=l_trame[-3:]
 
                 l_phi=[l_trame[0]["phi"],l_trame[1]["phi"],l_trame[2]["phi"]]
                 l_g=[l_trame[0]["g"],l_trame[1]["g"],l_trame[2]["g"]]                              # conserve les deux dernières valeurs de phi et g
-                l_t=[l_trame[0]["timestamp"],l_trame[1]["timestamp"],l_trame[2]["timestamp"]]
-                l_v=[l_trame[0]["speed"],l_trame[1]["speed"],l_trame[2]["speed"]]
-
+                l_t=[l_trame[0]["timestamp"],l_trame[1]["timestamp"],l_trame[2]["timestamp"]]# conserve les 3 dernières valeurs connues de temps
+                l_v=[l_trame[0]["speed"],l_trame[1]["speed"],l_trame[2]["speed"]] # conserve les 3 dernières valeurs connues de vitesse
+ 
                 cap=tr.cap(l_phi,l_g) # en minutes
                 cap_test.append(cap[-1])
                 cap_test.append(cap[-2])
@@ -146,6 +173,6 @@ def mim():
 
     print("faux_negatif:",faux_negatif)
     print("faux_positif:",faux_positif)
-    print("vrai_negatif:",vrai_negatif)  # on réalise les estimations sur 100 captures
+    print("vrai_negatif:",vrai_negatif)  # on réalise les estimations sur 100 trames RMC
     print("vrai_positif:",vrai_positif)
     print(nb_leurrage)
