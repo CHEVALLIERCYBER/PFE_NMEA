@@ -1,3 +1,33 @@
+------------------------------------------------------------------------
+
+#
+
+# @Auteurs : EV2 CHAVELLIER & EV2 LEBIGRE
+
+#
+
+# @Date : 06.11.20
+
+# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+
+# @Cadre : Projet de Fin d'Études
+
+# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+
+#
+
+#------------------------------------------------------------------------
+
+# @Titre : Support Vector Machine sur des données NMEA
+
+#------------------------------------------------------------------------
+
+# @Description : # Ce programme récupére les fichiers de capture ( présent dans un dictionnaire python ) et en extrait les parametres statistiques utiles  moyenne et ecart type
+# des features interressants : distance entre deux points successifs, variation de cap entre deux points successifs, ecarts en latitude et longitude.
+#
+
+#------------------------------------------------------------------------
+
 
 import traitement as tr
 import pickle as pk
@@ -5,7 +35,6 @@ import modele as md
 
 def entrainement(dict2):
 
-# Ce programme récupére les fichiers de capture ( présent dans un dictionnaire python ) et en extrait les parametres statistiques utiles  moyenne et ecart type
 
     modele={}
     modele["µ"]={}
