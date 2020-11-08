@@ -12,7 +12,7 @@ import entrainement as ent
 import modele as md
 import prediction as pr
 import traitement as tr
-import mim 
+import man_in_the_middle as mim
 
 ################### TEST STATIQUE ####################
 # on teste le modele sur une capture existante
