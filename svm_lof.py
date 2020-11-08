@@ -1,3 +1,35 @@
+
+#------------------------------------------------------------------------
+
+#
+
+# @Auteurs : EV2 CHAVELLIER & EV2 LEBIGRE
+
+#
+
+# @Date : 07.11.20
+
+# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+
+# @Cadre : Projet de Fin d'Études
+
+# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+
+#
+
+#------------------------------------------------------------------------
+
+# @Titre : Evaluation des "meilleures méthodes" de détéction d'anomalies sur des données NMEA
+
+#------------------------------------------------------------------------
+
+# @Description : Ce code permet de tester plusieurs méthodes de Machine Leanrning ( SVM et LOF ) avec des parametres différents
+
+#
+
+#------------------------------------------------------------------------
+
+
 import numpy as np
 import pynmea2
 import json
