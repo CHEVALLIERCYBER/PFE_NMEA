@@ -17,8 +17,13 @@ Ce scripts contient les fonctions statistiques ( moyenne et ecart-type) utilisé
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
   - prediction.py
+
+  - prediction2.py
+  
+Ces deux programmes permettent de determiner si un jeu de donnees de test est soumis à du leurrage, en utilisant plusieurs features différents : 
+
+Le programme prediction.py utilise les variations de phi et g, le programme prediction2.py utilise les variations de distance et de cap.
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
