@@ -146,7 +146,8 @@ def loadnprocessRMC(file):
 
 
 # chargement des données du train set
-train_dataRMC = open('C:/Users/tlebi/Desktop/PFE/RMCbien.json')
+#entrez le chemin d'accès au fichier RMCbien.json
+train_dataRMC = open()
 
 
 # normalisation
