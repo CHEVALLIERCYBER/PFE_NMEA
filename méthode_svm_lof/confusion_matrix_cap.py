@@ -165,10 +165,9 @@ def testeval (clf, clfcap, X_test, X_testcap, brouilvraicap) :
 
 
     return scoretrame, faussedetec
-
-
 # chargement des données du train set
-train_dataRMC = open('C:/Users/tlebi/Desktop/PFE/RMCbien.json')
+# Entrez le chemin d'acces de RMCbien.json
+train_dataRMC = open()
 
 # normalisation
 dataRMC = loadnprocessRMC(train_dataRMC)
