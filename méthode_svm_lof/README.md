@@ -4,8 +4,8 @@ Ils prennent tous en entrée des trames NMEA d'un batiment en temps réél (Par 
 Ils utilisent tous le fichier de données d'entrainement RMCbien.json (fichier disponible dans le dossier dataset).
 Lors du téléchargement, spécifiez le chemin d'accès au fichier RMCbien.json aux lignes : 
 
--149 pour confusion_matrix_cap.py
--170 pour confusion_matrix_distance.py
+-170 pour confusion_matrix_cap.py et confusion_matrix_distance.py\n
+-150 pour score_SVM.py
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------
