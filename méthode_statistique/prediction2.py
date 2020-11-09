@@ -2,7 +2,7 @@
 
 #
 
-# @Auteurs : EV2 CHAVELLIER
+# @Auteurs : EV2 CHEVALLIER
 
 #
 
