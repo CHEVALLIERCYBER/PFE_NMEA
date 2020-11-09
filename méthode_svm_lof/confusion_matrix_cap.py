@@ -24,9 +24,9 @@
 #------------------------------------------------------------------------
 
 # @Description :
-#Ce code permet de determiner la mthode et les paramètres optimaux pour l'évaluateur de cap
+#Ce code permet de determiner la méthode et les paramètres optimaux pour l'évaluateur de cap
 #Des trames NMEA doivent être fournies en entrée en temps réél, sur le port 5005.
-#Ce programme utilise les données de RMCbien.json comme données d'entrainement
+#Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés ligne 170)
 
 #------------------------------------------------------------------------
 
