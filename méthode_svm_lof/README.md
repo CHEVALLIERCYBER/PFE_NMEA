@@ -2,6 +2,11 @@ Ces progragrammes permmettent d'obtenir le score de programmes de classification
 
 Ils prennent tous en entrée des trames NMEA d'un batiment en temps réél (Par exemple produit par le simulateur Bridge Command), sur le port 5005.
 Ils utilisent tous le fichier de données d'entrainement RMCbien.json (fichier disponible dans le dossier dataset).
+Lors du téléchargement, spécifiez le chemin d'accès au fichier RMCbien.json aux lignes : 
+
+-149 pour confusion_matrix_cap.py
+-170 pour confusion_matrix_distance.py
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
