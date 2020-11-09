@@ -26,7 +26,9 @@
 # @Description : Ce code est la version finale du programme de détection que nous avons créé. Il détecte en temps réél
 #les anomalies des trames NMEA fournies en entrée, sur le port 5005.
 
-# En sortie, pour recuperer la classification faite par le programme, il suffit de recuperer les booléen brouildetec et
+#Ce programme utilise les fichiers RMCbien.json et RPMbien.json comme données d'entrainement(modifiez le chemin d'accés des deux fichiers ligne 174 et 175).
+
+# En sortie, pour recuperer la classification faite par le programme, il suffit de recuperer les booléens brouildetec et
 # brouildeteccap, si l'un est vrai, un leurrage est détecté par le programme
 
 #Une tentative de détection d'anomalies moteur sur les trames RPM est présente en commentaire
@@ -171,8 +173,8 @@ def loadnprocessRPM (file):
 
 
 # chargement des données du train set
-train_dataRMC = open('C:/Users/tlebi/Desktop/PFE/RMCbien.json')
-train_dataRPM = open('C:/Users/tlebi/Desktop/PFE/RPMbien.json')
+train_dataRMC = open('')
+train_dataRPM = open('')
 
 # normalisation
 dataRMC = loadnprocessRMC(train_dataRMC)
