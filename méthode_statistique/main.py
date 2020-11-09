@@ -52,7 +52,7 @@ modele_sauv=open("/home/guillaume/PFE/pythonProject/model.sauv","rb")
 modele=pk.load(modele_sauv)
 
 resultat_prediction=pr.prediction(test,modele) 
-resultat_prediction2=pr.prediction2(test,modele) 
+resultat_prediction2=pr2.prediction(test,modele) 
 
 
 print(resultat_prediction) # retourne une liste de booleens en fonction d'un leurrage detecté ou non
