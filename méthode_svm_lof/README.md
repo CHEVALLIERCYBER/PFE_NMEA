@@ -5,6 +5,7 @@ Ils utilisent tous le fichier de données d'entrainement RMCbien.json (fichier d
 Lors du téléchargement, spécifiez le chemin d'accès au fichier RMCbien.json aux lignes : 
 
 -170 pour confusion_matrix_cap.py et confusion_matrix_distance.py\n
+
 -150 pour score_SVM.py
 
 
