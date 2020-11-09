@@ -1,17 +1,14 @@
-Ce programme determine avec des méthodes d'intelligence si un recepteur GPS est soumis à du brouillage.
+Ces programme determinent avec des méthodes d'intelligence artificielles si un récepteur GPS est soumis à du leurrage.
+Il est necessaire de dipsoser du module pynmea2 présent a cette adresse : https://github.com/Knio/pynmea2
 
 Il peut fonctionner pour déterminer un leurrage simulé sur une plateforme simulée, via le logiciel BridgeCommand.
 
 Lancer le logiciel BridgeCommand
 
-Il est necessaire de dipsoser du module pynmea2 présent a cette adresse : https://github.com/Knio/pynmea2
+Dans ce dépot, on distingue 3 parties : 
 
-Executer le script main.py pour acceder à la méthode statistique : python3 main.py 
+  - un dossier méthode_statistique qui implémente et évalue les différentes fonctions relatives à la résolution statistique du problème ( voir le README.md du dossier pour plus d'informations)
 
-Le script entrainement.py et modele.py ne sont là qu'a titre d'indication pour montrer comment est calculé le modèle, qui est déjà enregistré sous la forme du fichier modele.sauv . 
-
-Pour recalculer le modele, il est possible d'executer les scripts modele.py et entrainement.py en utilisant les données d'entrainement extraites du Entrainement.zip 
-
-Le script mim.py utilise ce fichier.
-
-Executer le script svm_lof.py pour utiliser les autres méthodes de Machine Learning, ce programme évalue quelle est la méthode la plus efficace.
+  - un dossier méthode_svm_lof qui implémente et évalue plusieurs méthodes d'intelligence atrificielle ( via le module scikit-learn de python ) pour déterminer la présence ou non de leurrage.
+  
+  - un dossier script_final qui contient la version "prete à l'emploi" de ces deux types de scripts. 
