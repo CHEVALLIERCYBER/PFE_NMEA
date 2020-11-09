@@ -2,7 +2,7 @@
 
 #
 
-# @Auteurs : EV2 CHAVELLIER & EV2 LEBIGRE
+# @Auteurs : EV2 CHAVELLIER 
 
 #
 
@@ -18,13 +18,13 @@
 
 #------------------------------------------------------------------------
 
-# @Titre : Support Vector Machine sur des données NMEA
+# @Titre : Entrainement
 
 #------------------------------------------------------------------------
 
-# @Description : # Ce programme récupére les fichiers de capture ( présent dans un dictionnaire python ) et en extrait les parametres statistiques utiles  moyenne et ecart type
-# des features interressants : distance entre deux points successifs, variation de cap entre deux points successifs, ecarts en latitude et longitude.
-#
+# @Description : # Ce programme récupère les données d'éntrainement sous forme d'un dictionnaire et calcule les parametres satistiques des features interessants : 
+# variations de phi, variation de g, variation de cap et variation de distance.
+# Le tout est sauvegardé dans un fichier binaire grace au module pickle de python.
 
 #------------------------------------------------------------------------
 
