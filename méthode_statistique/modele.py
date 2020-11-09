@@ -1,3 +1,32 @@
+#------------------------------------------------------------------------
+
+#
+
+# @Auteurs : EV2 CHAVELLIER
+
+#
+
+# @Date : 06.11.20
+
+# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+
+# @Cadre : Projet de Fin d'Études
+
+# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+
+#
+
+#------------------------------------------------------------------------
+
+# @Titre : Prediction de leurrage
+
+#------------------------------------------------------------------------
+
+# @Description : # Ce programme construit un dictionnaire avec l'ensemble des fichiers d'entrainement.
+
+
+#------------------------------------------------------------------------
+
 def modele():
 
     dict2={}
