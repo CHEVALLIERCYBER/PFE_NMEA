@@ -1,4 +1,35 @@
+------------------------------------------------------------------------
 
+#
+
+# @Auteurs : EV2 CHAVELLIER
+
+#
+
+# @Date : 06.11.20
+
+# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+
+# @Cadre : Projet de Fin d'Études
+
+# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+
+#
+
+#------------------------------------------------------------------------
+
+# @Titre : Prediction de leurrage
+
+#------------------------------------------------------------------------
+
+# @Description : # Ce programme recoit une liste de données à tester ( sous la forme de listes de latitudes, longitudes et temps ) et le modele qui est un dictionnaire contenant
+# les paramètres statistiques des features suivants : variations de distance (dD) entre deux points et variations de cap (dC) entre deux points, et ce, en focntions de la vitesse du
+# porteur.
+# Il calcule ensuite les features(dC,dD) sur les données du jeu de test et calcule les variables réduite w= (dC-µ)/sigma et z=(dD-µ)/sigma
+# Si w>3 ou z>3 on considere qu'il y a leurrage.
+
+
+#------------------------------------------------------------------------
 
 import traitement as tr
 import sklearn as sk
@@ -14,8 +45,8 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
     delta_cap_test=tr.delta(cap_test,t_test) # delta en minutes de cap
     delta_distance_test=tr.delta_distance(phi_test,g_test) # delta de distances en yards
 
-    resultat=[] # estimation de Z=(X-µ)/sigma
-    leurrage=[] # True si leurrage: w>3
+    resultat=[] 
+    leurrage=[] # True si leurrage: w>3 ou z>3
 
     for i in range(len(cap_test)-1): # on parcourt la liste des points
 
@@ -49,7 +80,7 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
             resultat.append(w)
             resultat.append(z)
 
-        elif (vitesse < 5): # vitesse presque nulle ????
+        elif (vitesse < 5): # vitesse presque nulle 
 
 
             w = (abs(delta_cap_test[i] - modele["µ"]["0nds"]["all"]["cap"]) / modele["sigma"]["0nds"]["all"]["cap"])
@@ -81,6 +112,4 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
             
     #print ("resultat : ",resultat)
 
-
-
-    return [leurrage,resultat[-1]]
+    return [leurrage,resultat]
