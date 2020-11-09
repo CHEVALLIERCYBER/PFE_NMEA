@@ -1,3 +1,36 @@
+#------------------------------------------------------------------------
+
+#
+
+# @Auteurs : EV2 CHAVELLIER
+
+#
+
+# @Date : 06.11.20
+
+# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+
+# @Cadre : Projet de Fin d'Études
+
+# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+
+#
+
+#------------------------------------------------------------------------
+
+# @Titre : Prediction de leurrage
+
+#------------------------------------------------------------------------
+
+# @Description : # Ce programme recoit une liste de données à tester ( sous la forme de listes de latitudes, longitudes et temps ) et le modele qui est un dictionnaire contenant
+# les paramètres statistiques des features suivants : variations de latitude (dphi) entre deux points et variations de longitude (dg) entre deux points, et ce, en focntions de la vitesse du
+# porteur.
+# Il calcule ensuite les features(dphi et dg) sur les données du jeu de test et calcule les variables réduite w= (dphi-µ)/sigma et z=(dg-µ)/sigma
+# Si w>3 ou z>3 on considere qu'il y a leurrage.
+
+
+#------------------------------------------------------------------------
+
 import traitement as tr
 import sklearn as sk
 
