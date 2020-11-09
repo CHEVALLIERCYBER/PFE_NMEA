@@ -13,6 +13,8 @@ Ce scripts contient les fonctions statistiques ( moyenne et ecart-type) utilisé
 
   - man_in_the_middle.py
   
+Ce script ralise un socket qui ecoute sur le port de sortie de Bridge Command (127.0.0.1:5005), récupére les trames NMEA et en modifie qq unes à la volée avant de les renvoyer vers OPenCPN.
+En paralelle, les algorithmes de détection prediction.py et prediction2.py sont appelés pour détecter les anomalies créées
   
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------
