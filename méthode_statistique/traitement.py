@@ -1,3 +1,32 @@
+#------------------------------------------------------------------------
+
+#
+
+# @Auteurs : EV2 CHAVELLIER
+
+#
+
+# @Date : 06.11.20
+
+# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+
+# @Cadre : Projet de Fin d'Études
+
+# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+
+#
+
+#------------------------------------------------------------------------
+
+# @Titre : Prediction de leurrage
+
+#------------------------------------------------------------------------
+
+# @Description : # Ce programme définit les fonctions statistiques utiles pour les calculs suivants : moyenne, écart-type, différence entre deux valeurs successives dans une liste 
+
+
+#------------------------------------------------------------------------
+
 import json
 import math
 import statistics as st
