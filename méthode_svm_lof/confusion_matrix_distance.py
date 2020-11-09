@@ -23,9 +23,9 @@
 # ------------------------------------------------------------------------
 
 # @Description :
-# Ce code permet de determiner la mthode et les paramètres optimaux pour l'évaluateur de distance
+# Ce code permet de determiner la méthode et les paramètres optimaux pour l'évaluateur de distance
 # Des trames NMEA doivent être fournies en entrée en temps réél, sur le port 5005.
-# Ce programme utilise les données de RMCbien.json comme données d'entrainement
+# Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés de RMCbien.json ligne 170)
 
 # ------------------------------------------------------------------------
 
