@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------
+*#------------------------------------------------------------------------
 
 #
 
@@ -39,15 +39,17 @@ import prediction2 as pr2
 import traitement as tr
 import man_in_the_middle as mim
 
+chemin="/home/guillaume/PFE/pythonProject" # mettre le chemin du dossier PFE_NMEA-main
+
 ################### TEST STATIQUE ####################
 # on teste les modeles sur une capture existante
 
 
-test=open("/home/guillaume/PFE/DATA/RMC/test_RMC_jamming.json")
+test=open(chemin+"/PFE_NMEA-main/dataset/test_RMC_spoofing.json")
 
 test = tr.load(test)
 
-modele_sauv=open("/home/guillaume/PFE/pythonProject/model.sauv","rb")
+modele_sauv=open(chemin+"/PFE_NMEA-main/dataset/model.sauv","rb")
 
 modele=pk.load(modele_sauv)
 
