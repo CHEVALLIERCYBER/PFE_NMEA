@@ -2,7 +2,7 @@
 
 #
 
-# @Auteurs : EV2 CHEVALLIER
+# @Auteurs : EV2 CHAVELLIER
 
 #
 
@@ -46,7 +46,7 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
 	delta_distance_test=tr.delta_distance(phi_test,g_test) # delta de distances en yards
 
 	resultat=[] 
-	leurrage=[] # True si leurrage: w>3 ou z>3
+	detection_leurrage=[] # True si leurrage: w>3 ou z>3
 
 	for i in range(len(cap_test)-1): # on parcourt la liste des points
 
@@ -56,22 +56,22 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
 		if (vitesse < 15 and vitesse>=5): # la vitesse autour de  10 nds
 		
 			w=(abs(delta_cap_test[i]-modele["µ"]["10nds"]["0"]["cap"])/modele["sigma"]["10nds"]["0"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["10nds"]["0"]["cap"]) / modele["sigma"]["10nds"]["0"]["cap"])
+			z = (abs(delta_distance_test[i] - modele["µ"]["10nds"]["0"]["distance"]) / modele["sigma"]["10nds"]["0"]["cap"])
             
 		elif (vitesse < 25 and vitesse>=15):    # vitesse autour de  20 nds
 
 			w=(abs(delta_cap_test[i]-modele["µ"]["20nds"]["0"]["cap"])/modele["sigma"]["20nds"]["0"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["20nds"]["0"]["vitesse"]) / modele["sigma"]["20nds"]["0"]["vitesse"])
+			z = (abs(delta_distance_test[i] - modele["µ"]["20nds"]["0"]["distance"]) / modele["sigma"]["20nds"]["0"]["distance"])
 
 		elif (vitesse < 5): # vitesse presque nulle 
 
 			w = (abs(delta_cap_test[i] - modele["µ"]["0nds"]["all"]["cap"]) / modele["sigma"]["0nds"]["all"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["0nds"]["0"]["vitesse"]) / modele["sigma"]["0nds"]["0"]["vitesse"])
+			z = (abs(delta_distance_test[i] - modele["µ"]["0nds"]["0"]["distance"]) / modele["sigma"]["0nds"]["0"]["distance"])
 
 		else: # vitesse > 25
 
 			w = (abs(delta_cap_test[i] - modele["µ"]["0nds"]["all"]["cap"]) / modele["sigma"]["0nds"]["all"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["30nds"]["0"]["cap"]) / modele["sigma"]["30nds"]["0"]["cap"])
+			z = (abs(delta_distance_test[i] - modele["µ"]["30nds"]["0"]["distance"]) / modele["sigma"]["30nds"]["0"]["distance"])
 
 		if (w>3 or z> 3):
 			leurrage=True
@@ -80,7 +80,7 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
                 
 		resultat.append(w)
 		resultat.append(z)
-		leurrage.append(leurrage)
+		detection_leurrage.append(leurrage)
 
             
     #print ("resultat : ",resultat)
