@@ -24,11 +24,11 @@
 #------------------------------------------------------------------------
 
 # @Description :
-#ce code permet de tester en même temps le cap et la distance avec des algorithme de detection SVM
-#Chaque évaluateur a ses paramètres optimaux, déterminés grâce aux programmes de matrice de confusion
+#Ce code permet de déterminer le score d'un programme de détection utilisant en même temps le cap et la distance avec des algorithme de detection SVM
+#Les deux évaluateur ont leurs paramètres optimaux, déterminés grâce aux programmes de matrice de confusion
 
 #Des trames NMEA doivent être fournies en entrée en temps réél, sur le port 5005.
-#Ce programme utilise les données de RMCbien.json comme données d'entrainement
+#Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés ligne 150)
 
 #------------------------------------------------------------------------
 
