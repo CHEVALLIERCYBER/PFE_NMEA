@@ -53,13 +53,12 @@ modele_sauv=open(chemin+"/PFE_NMEA-main/dataset/model.sauv","rb")
 
 modele=pk.load(modele_sauv)
 
-resultat_prediction=pr.prediction(test,modele) 
-resultat_prediction2=pr2.prediction(test,modele) 
-
+resultat_prediction=pr.prediction(test,modele)    # modele avec ecart en phi et g
+resultat_prediction2=pr2.prediction(test,modele)  # modele avec ecart en cap et distance
 
 print(resultat_prediction) # retourne une liste de booleens en fonction d'un leurrage detecté ou non
 
 ############### TEST DYNAMIQUE #####################
 # on test le modele en temps reel
 
-mim.mim()
+#mim.mim()
