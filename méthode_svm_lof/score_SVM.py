@@ -30,7 +30,7 @@
 #Des trames NMEA doivent être fournies en entrée en temps réél, sur le port 5005.
 #Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés ligne 150)
 
-#il est possible de motifier la nature du leurrage (modifiez les variables offsetlat et offsetlong lignes 238-244) et d'autres paramètre de test (lignes 195-199)
+#il est possible de motifier la nature du leurrage (modifiez les variables offsetlat et offsetlong lignes 238-244) et d'autres paramètre de test (lignes 195-198)
 
 #------------------------------------------------------------------------
 
@@ -195,6 +195,9 @@ sockrec.bind((UDP_IPrec, UDP_PORTrec))
 departdiff = 3  # compteur de trame avant debut du test
 departdiffRPM = 2
 frequencebrouil = 0.10  # frenquence des trames changées
+ntramestest = 100
+
+
 ntrameRMC = 0  # compteur de trame
 ntrameRPM = 0
 
@@ -214,7 +217,7 @@ modiftramesuivante = False
 modiftramesuivantedeux = False
 
 try:
-    while ntrameRMC < 102:
+    while ntrameRMC < ntramestest:
 
         # reception des données, parsing
         data = sockrec.recvfrom(1024)
