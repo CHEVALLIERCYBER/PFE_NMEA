@@ -27,6 +27,9 @@
 # Des trames NMEA doivent être fournies en entrée en temps réél, sur le port 5005.
 # Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés de RMCbien.json ligne 170)
 
+
+#il est possible de motifier la nature du leurrage (modifiez les variables offsetlat et offsetlong lignes 280-281) et d'autres paramètres de test (lignes 240-242)
+
 # ------------------------------------------------------------------------
 
 import numpy as np
@@ -235,15 +238,15 @@ sockenv = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sockrec.bind((UDP_IPrec, UDP_PORTrec))
 
 departdiff = 3  # compteur de trame avant debut du test
+ntramesatest = 100 #nombre de trames à tester
+frequencebrouil = 0.20  # frenquence des trames changées
+
+
 ntrameRMC = 0  # compteur de trame
 donneestest = []  # liste contenant les données en cours, à tester
-
-
-frequencebrouil = 0.20  # frenquence des trames changées
 # offset de latitude et longitude ajoutés aux trames modifiées
 # pas encore testé seuil de detection si score en fonction de l'offset
-offsetlat = float(0.0045 * np.random.random_sample(1) + 0.005)
-offsetlong = float(0.0045 * np.random.random_sample(1) + 0.005)
+
 
 
 # booléen permetant d'identifier une trame suivant l'application d'un offset (comme la distance est calculée entre
@@ -273,6 +276,10 @@ try:
         if message.sentence_type == "RMC" and ntrameRMC >= departdiff:
             print(ntrameRMC)
             if np.random.random_sample(1) < frequencebrouil:
+                
+                offsetlat = float(0.0045 * np.random.random_sample(1) + 0.005)
+                offsetlong = float(0.0045 * np.random.random_sample(1) + 0.005)
+                
                 modif = float(message.data[2]) + offsetlat
                 message.data[2] = str(modif)
                 modif = float(message.data[4]) + offsetlong
