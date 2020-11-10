@@ -30,6 +30,8 @@
 #Des trames NMEA doivent être fournies en entrée en temps réél, sur le port 5005.
 #Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés ligne 150)
 
+#il est possible de motifier la nature du leurrage (modifiez les variables offsetlat et offsetlong lignes 238-244) et d'autres paramètre de test (lignes 195-199)
+
 #------------------------------------------------------------------------
 
 
@@ -192,19 +194,18 @@ sockrec.bind((UDP_IPrec, UDP_PORTrec))
 
 departdiff = 3  # compteur de trame avant debut du test
 departdiffRPM = 2
+frequencebrouil = 0.10  # frenquence des trames changées
 ntrameRMC = 0  # compteur de trame
 ntrameRPM = 0
+
+
+
 donneestest = []  # liste contenant les données en cours, à tester
-
-
 scoretrame = 0  # compte des trames bien classifiées
 faussedetec = 0  # compteur de fausses detections
 
-frequencebrouil = 0.10  # frenquence des trames changées
-# offset de latitude et longitude ajoutés aux trames modifiées
-# pas encore testé seuil de detection si score en fonction de l'offset
-offsetlat = float(0.45 * np.random.random_sample(1) + 0.05)
-offsetlong = float(0.45 * np.random.random_sample(1) + 0.05)
+
+
 
 
 # booléen permetant d'identifier une trame suivant l'application d'un offset (comme la distance est calculée entre
@@ -233,6 +234,15 @@ try:
         # modification de trame, brouillage avec un offset de latitude et longitude
         if message.sentence_type == "RMC" and ntrameRMC >= departdiff:
             print(ntrameRMC)
+            
+            alea = float(np.random.random_sample(1))
+            if alea > 0.5:
+                offsetlat = float(0.005)
+                offsetlong = 0
+            else:
+                offsetlat = 0
+                offsetlong = float(0.005)
+            
             if np.random.random_sample(1) < frequencebrouil:
                 modif = float(message.data[2]) + offsetlat
                 message.data[2] = str(modif)
@@ -292,7 +302,7 @@ try:
                 brouildeteccap = False
                 print('Tout va bien')
             # Verification pour scoring de la validité du resulat
-            if ((not brouildetec and not brouildeteccap) and (brouilvraicap or brouilvrai)) or ((not brouilvrai and not brouilvraicap) and (brouildetec or brouildeteccap)):
+            if not(((not brouildetec and not brouildeteccap) and (brouilvraicap or brouilvrai)) or ((not brouilvrai and not brouilvraicap) and (brouildetec or brouildeteccap))):
                 scoretrame = scoretrame + 1
             elif (brouildetec and not brouilvrai) or (brouildeteccap and not brouilvraicap):
                 print('fausse detection...')
