@@ -26,7 +26,9 @@
 # @Description :
 #Ce code permet de determiner la méthode et les paramètres optimaux pour l'évaluateur de cap
 #Des trames NMEA doivent être fournies en entrée en temps réél, sur le port 5005.
-#Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés ligne 170)
+#Ce programme utilise les données de RMCbien.json comme données d'entrainement (modifiez le chemin d'accés ligne 170)*
+
+#il est possible de motifier la nature du leurrage (modifiez les variables offsetlat et offsetlong lignes 280-281) et d'autres paramètres de test (lignes 240-242)
 
 #------------------------------------------------------------------------
 
@@ -230,23 +232,20 @@ print("UDP receive IP: %s" % UDP_IPrec)
 print("UDP target IP: %s" % UDP_IPenv)
 print("UDP receive port: %s" % UDP_PORTrec)
 print("UDP target port: %s" % UDP_PORTenv)
-
 # création des socket d'entrée et sortie
 sockrec = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sockenv = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sockrec.bind((UDP_IPrec, UDP_PORTrec))
 
 departdiff = 3  # compteur de trame avant debut du test
-ntrameRMC = 0  # compteur de trame
+ntramestest = 100 #nombre de trames à tester
+frequencebrouil = 0.20  # frenquence des trames changées
+
 donneestest = []  # liste contenant les données en cours, à tester
 
 
-frequencebrouil = 0.20  # frenquence des trames changées
-# offset de latitude et longitude ajoutés aux trames modifiées
-# pas encore testé seuil de detection si score en fonction de l'offset
-offsetlat = float(0.0045 * np.random.random_sample(1) + 0.005)
-offsetlong = float(0.0045 * np.random.random_sample(1) + 0.005)
 
+ntrameRMC = 0  # compteur de trame
 
 # booléen permetant d'identifier une trame suivant l'application d'un offset (comme la distance est calculée entre
 # deux points, le brouillage entraine 2 sautes de distance, une avec le point précédent et une avec le point suivant)
@@ -254,7 +253,7 @@ modiftramesuivante = False
 modiftramesuivantedeux = False
 
 try:
-    while ntrameRMC < 100:
+    while ntrameRMC < ntramestest:
 
         # reception des données, parsing
         data = sockrec.recvfrom(1024)
@@ -275,6 +274,11 @@ try:
         if message.sentence_type == "RMC" and ntrameRMC >= departdiff:
             print(ntrameRMC)
             if np.random.random_sample(1) < frequencebrouil:
+                
+                # offset de latitude et longitude ajoutés aux trames modifiées
+                offsetlat = float(0.0045 * np.random.random_sample(1) + 0.005)
+                offsetlong = float(0.0045 * np.random.random_sample(1) + 0.005)
+                
                 modif = float(message.data[2]) + offsetlat
                 message.data[2] = str(modif)
                 modif = float(message.data[4]) + offsetlong
