@@ -27,9 +27,9 @@ These two scripts detect if a dataset is compromised by GNSS spoofing, with the 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
- - training.py modele.py
+ - training.py model.py
 
-The sript entrainement.py and modele.py are just used to explain how the model is computed, meanwhile the model is ever saved in the file /PFE_NMEA/datasets/model.sauv ( binary file containing a python object )
+The sripts training.py and model.py are just used to explain how the model is computed, meanwhile the model is ever saved in the file /PFE_NMEA/datasets/model.sauv ( binary file containing a python object )
 
 To comput the model again, run the script entrainement.py, with the dataset in the file Entrainement.zip.
 
