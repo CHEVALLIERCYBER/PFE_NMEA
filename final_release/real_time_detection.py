@@ -100,7 +100,7 @@ def distance(phi1, phi0, g1, g0):
 def diff_list(list):
     list_diff = []
     for i in range(1, len(list) - 1):
-        listediff.append(list[i] - list[i - 1])
+        list_diff.append(list[i] - list[i - 1])
     return list_diff
 
 
@@ -173,7 +173,7 @@ def load_and_process_RPM (file):
 
 
 
-# normalisation
+# normalization
 dataRMC = load_and_process_RMC(train_dataRMC)
 dataRPM = load_and_process_RPM(train_dataRPM)
 
@@ -188,7 +188,7 @@ X_train = preprocessing.scale(X_train)
 X_traincap = preprocessing.scale(X_traincap)
 X_trainRMC = preprocessing.scale(X_trainRMC)
 
-# definition du modèle et entrainement
+# definition of estimator
 clf = svm.OneClassSVM(nu=0.007, kernel="rbf", gamma=0.7)
 clf.fit(X_train)
 clfcap = svm.OneClassSVM(nu=0.02, kernel="rbf", gamma=0.5)
