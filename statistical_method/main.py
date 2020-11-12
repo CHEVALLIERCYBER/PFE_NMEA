@@ -26,10 +26,10 @@ import prediction_v2 as pr2
 import traitement as tr
 import man_in_the_middle as mim
 
-path="/home/guillaume/PFE/pythonProject" # mettre le chemin du dossier PFE_NMEA-main
+path=tr.set_path()
 
 
 ############### DYNAMICAL TEST #####################
-# real time test
 
-#mim.mim()
+
+mim.mim()
