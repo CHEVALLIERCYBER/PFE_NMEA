@@ -44,7 +44,7 @@ UDP_PORTenv = 10110  # exit socket  (open CPN)
 
 # Parameters
 number_to_test = 100 #number of NMEA sentences to test
-frequency_spoofing = 0.10  # frequency of spoofing
+frequencebrouil = 0.10  # frequency of spoofing
 differate_start = 3  # number of sentences before the start of test (must be at least 3)
 
 #type of spofing used
@@ -162,9 +162,9 @@ def load_and_process_RMC(file):
     return matrix1, matrix2
 
 #Evaluation of the current estimator
-def testeval (est_dist, est_head, X_dist, X_head, true_spoof) :
+def testeval (est_dist, est_head, X_dist, X_head, true_spoof, scaler) :
 
-    prediction_heading = est_head.predict(scaler_heading.transform(X_head))  # prediction
+    prediction_heading = est_head.predict(scaler.transform(X_head))  # prediction
     if prediction_heading == -1:
         brouildeteccap = True
     else:
@@ -207,11 +207,11 @@ for kernel in listetypekernel:
             estimator_name.append("SVM heading type : " + kernel + " nu = " + str(round( 0.01*i, 3)) + " gamma = " + str(round(0.1*j, 2)))
 for i in range(20):
     for j in range(1,20):
-        clf1 = LocalOutlierFactor(n_neighbors=20, novelty=True, contamination=0.1)
-        clf1.fit(X_train_distance)
-        clfcap1 = LocalOutlierFactor(n_neighbors=i+10, novelty=True, contamination=0.01*j)
-        clfcap1.fit(X_train_heading)
-        evaluateur.append([clf1,clfcap1])
+        clf_distance = LocalOutlierFactor(n_neighbors=20, novelty=True, contamination=0.1)
+        clf_distance.fit(X_train_distance)
+        clf_heading = LocalOutlierFactor(n_neighbors=i+10, novelty=True, contamination=0.01*j)
+        clf_heading.fit(X_train_heading)
+        evaluateur.append([clf_distance,clf_heading])
         estimator_name.append("LOF heading n = " + str( round(i+10,1) ) + "contamination = " + str(round(0.01*j,2)))
 
 
@@ -226,7 +226,7 @@ print("UDP target IP: %s" % UDP_IPenv)
 print("UDP receive port: %s" % UDP_PORTrec)
 print("UDP target port: %s" % UDP_PORTenv)
 
-# creation of sockets 
+# creation of sockets
 sockrec = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sockenv = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sockrec.bind((UDP_IPrec, UDP_PORTrec))
@@ -256,15 +256,15 @@ try:
         if message.sentence_type == "RMC" and RMC_sentence_number == differate_start - 1:
             test_data.append(message.data[2])
             test_data.append(message.data[4])
-            
+
         # Spoofing
         if message.sentence_type == "RMC" and RMC_sentence_number >= differate_start:
             print(RMC_sentence_number)
-            if np.random.random_sample(1) < frequency_spoofing:
+            if np.random.random_sample(1) < frequencebrouil:
 
                 message.data[2], message.data[4] = spoofing(message.data[2], message.data[4])
 
-                spoof_distance = True  
+                spoof_distance = True
                 spoof_heading = True
                 modif_next_sentence = True
                 print('Spoofing')
@@ -275,7 +275,7 @@ try:
                 spoof_heading = True
                 modif_next_sentence = False
                 modif_next_sentence_two = True
-            elif modif_next_sentence_two:  
+            elif modif_next_sentence_two:
                 print("Second RMC sentence after spoofing")
                 spoof_heading = True
                 spoof_distance = False
@@ -283,7 +283,7 @@ try:
             else:
                 print('No spoofing')
                 spoof_heading = False
-                spoof_distance = False  
+                spoof_distance = False
 
             # sentence analysis and scoring
 
@@ -299,7 +299,7 @@ try:
 
             # scoring for each estimator
             for i in range(0, len(evaluateur)):
-                scoring = testeval(evaluateur[i][0],evaluateur[i][1], X_sentence_dist, X_sentence_head, spoof_heading)
+                scoring = testeval(evaluateur[i][0],evaluateur[i][1], X_sentence_dist, X_sentence_head, spoof_heading, scaler_heading)
                 score_estimator[i] = score_estimator[i] + scoring[0]
                 miss_estimator[i] = miss_estimator[i] + scoring[1]
 
