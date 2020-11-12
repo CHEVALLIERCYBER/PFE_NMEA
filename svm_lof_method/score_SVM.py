@@ -24,7 +24,7 @@
 ##################################################################################################
 
 # loading of train set data, enter access path
-train_dataRMC = open('C:/Users/tlebi/Desktop/PFE/RMCbien.json')
+train_dataRMC = open('n')
 
 # ports used
 UDP_IPrec = "127.0.0.1"  # entry IP
