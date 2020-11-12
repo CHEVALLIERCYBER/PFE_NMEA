@@ -24,8 +24,8 @@ In the same time, detection algorithms prediction_v1.py and prediction_v2.py are
   - prediction2.py
   
 These two scripts detect if a dataset is compromised by GNSS spoofing, with the use of differents features : latitude and longitude variations, heading and distance variations.
-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
  - entrainement.py modele.py
 
