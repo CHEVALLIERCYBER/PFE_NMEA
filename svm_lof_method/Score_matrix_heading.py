@@ -115,7 +115,7 @@ def distance(phi1, phi0, g1, g0):
 def diff_list(list):
     list_diff = []
     for i in range(1, len(list) - 1):
-        listediff.append(list[i] - list[i - 1])
+        list_diff.append(list[i] - list[i - 1])
     return list_diff
 
 
