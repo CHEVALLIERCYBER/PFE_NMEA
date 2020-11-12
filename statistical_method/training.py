@@ -3,12 +3,12 @@
 # @Auteurs : EV2 CHAVELLIER 
 #
 # @Date : 06.11.20
-# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
+# @Location : École Navale / Chaire de Cyberdéfense des systèmes navals
 # @Cadre : Projet de Fin d'Études
-# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+# @Subject : # Real time detection of cyber anomalies upon a NMEA network by using machine learning methods
 #
 #------------------------------------------------------------------------
-# @Titre : Entrainement
+# @Title : Training
 #------------------------------------------------------------------------
 # @Description : # Ce programme récupère les données d'éntrainement sous forme d'un dictionnaire et calcule les parametres satistiques des features interessants : 
 # variations de phi, variation de g, variation de cap et variation de distance.
@@ -18,25 +18,25 @@
 
 import traitement as tr
 import pickle as pk
-import modele as md
+import model as md
 
-def entrainement(dict2):
+def training(dict2):
 
 
-    modele={}
-    modele["µ"]={}
-    modele["sigma"]={}
+    model={}
+    model["µ"]={}
+    model["sigma"]={}
 
-    for x in dict2: # on parcourt le dictionnaire en fonction du champ de vitesse
-        modele["µ"][x]={}
-        modele["sigma"][x]={}
+    for x in dict: # on parcourt le dictionnaire en fonction du champ de vitesse
+        model["µ"][x]={}
+        model["sigma"][x]={}
 
-        for y in dict2[x]: # on parcourt le dictionnaire en fonction du champ de cap
+        for y in dict[x]: # on parcourt le dictionnaire en fonction du champ de cap
 
-            modele["µ"][x][y] = {}
-            modele["sigma"][x][y] = {}
+            model["µ"][x][y] = {}
+            model["sigma"][x][y] = {}
 
-            doc=tr.load(dict2[x][y]) # on ouvre le fichier json correspondant
+            doc=tr.load(dict[x][y]) # on ouvre le fichier json correspondant
 
             phi_l=doc[0]
             g_l=doc[1]   # recupere une liste de phi,g,t
@@ -49,22 +49,22 @@ def entrainement(dict2):
 
 # on construit le modele avec les features que l'on veut : ici différence de cap et difference de distance mais aussi variation de phi et de g
 
-            modele["µ"][x][y]["phi"] = tr.parametres(dphi_l)["moyenne"]
-            modele["µ"][x][y]["g"] = tr.parametres(dg_l)["moyenne"]    # met à jour le modele
+            model["µ"][x][y]["phi"] = tr.parametres(dphi_l)["moyenne"]
+            model["µ"][x][y]["g"] = tr.parametres(dg_l)["moyenne"]    # met à jour le modele
 
-            modele["sigma"][x][y]["phi"] = tr.parametres(dphi_l)["ecart-type"]
-            modele["sigma"][x][y]["g"] = tr.parametres(g_l)["ecart-type"]
+            model["sigma"][x][y]["phi"] = tr.parametres(dphi_l)["ecart-type"]
+            model["sigma"][x][y]["g"] = tr.parametres(g_l)["ecart-type"]
 
 
-            modele["µ"][x][y]["cap"] = tr.parametres(dcap_l)["moyenne"]
-            modele["µ"][x][y]["distance"] = tr.parametres(d_distance)["moyenne"]
+            model["µ"][x][y]["cap"] = tr.parametres(dcap_l)["moyenne"]
+            model["µ"][x][y]["distance"] = tr.parametres(d_distance)["moyenne"]
 
-            modele["sigma"][x][y]["cap"] = tr.parametres(dcap_l)["ecart-type"]
-            modele["sigma"][x][y]["distance"] = tr.parametres(d_distance)["ecart-type"]
+            model["sigma"][x][y]["cap"] = tr.parametres(dcap_l)["ecart-type"]
+            model["sigma"][x][y]["distance"] = tr.parametres(d_distance)["ecart-type"]
 
     with open('model.sauv','wb' ) as model_sauv_file: # enregistre le modele dans un fichier
-        pk.dump(modele, model_sauv_file) # sauvegarde le modele
+        pk.dump(model, model_sauv_file) # sauvegarde le modele
 
-    return modele
+    return model
 
-entrainement(md.modele())
+entrainement(md.model())
