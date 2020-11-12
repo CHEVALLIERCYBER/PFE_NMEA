@@ -44,7 +44,7 @@ UDP_PORTenv = 10110  # exit socket  (open CPN)
 
 # Parameters
 number_to_test = 100 #number of NMEA sentences to test
-frequencebrouil = 0.10  # frequency of spoofing
+frequency_spoofing = 0.10  # frequency of spoofing
 differate_start = 3  # number of sentences before the start of test (must be at least 3)
 
 #type of spofing used
@@ -260,7 +260,7 @@ try:
         # Spoofing
         if message.sentence_type == "RMC" and RMC_sentence_number >= differate_start:
             print(RMC_sentence_number)
-            if np.random.random_sample(1) < frequencebrouil:
+            if np.random.random_sample(1) < frequency_spoofing:
 
                 message.data[2], message.data[4] = spoofing(message.data[2], message.data[4])
 
