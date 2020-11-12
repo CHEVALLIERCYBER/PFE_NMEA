@@ -1,21 +1,21 @@
-Les scripts présents dans ce dossiers permettent de déterminer via la méthode statistique si un recepteur est soumis à du leurrage GPS.
+These scripts are using a statistical method in order to determine if a GNSS receiver is confronted with spoofing.
 
-On distingue plusieurs scripts :
+There are different scripts :
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
   - traitement.py 
   
-Ce scripts contient les fonctions statistiques ( moyenne et ecart-type) utilisées pour construire le modele
+This script contains the statistical functions ( mean and standard deviation ), and other useful one like difference beetwen two lists.  
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
   - man_in_the_middle.py
   
-Ce script ralise un socket qui ecoute sur le port de sortie de Bridge Command (127.0.0.1:5005), récupére les trames NMEA et en modifie qq unes à la volée avant de les renvoyer vers OPenCPN.
-En paralelle, les algorithmes de détection prediction.py et prediction2.py sont appelés pour détecter les anomalies créées
+This script build a sockey to listen the output port of Bridge Command ( 127.0.0.1:5005), get the NMEA sentences, implement a real time alteration of a predifined number of sentences and put them to Open CPN.
   
+In the same time, detection algorithms prediction_v1.py and prediction_v2.py are used to detect the anomalies.
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -23,19 +23,15 @@ En paralelle, les algorithmes de détection prediction.py et prediction2.py sont
 
   - prediction2.py
   
-Ces deux programmes permettent de determiner si un jeu de donnees de test est soumis à du leurrage, en utilisant plusieurs features différents : 
-
-Le programme prediction.py utilise les variations de phi et g, le programme prediction2.py utilise les variations de distance et de cap.
-
-
---------------------------------------------------------------------------------------------------------------------------------------------------------
+These two scripts detect if a dataset is compromised by GNSS spoofing, with the use of differents features : latitude and longitude variations, heading and distance variations.
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
  - entrainement.py modele.py
 
-Le script entrainement.py et modele.py ne sont là qu'a titre d'indication pour montrer comment est calculé le modèle, qui est déjà enregistré sous la forme du fichier modele.sauv présent dans le dossier dataset.
-Pour recalculer le modele, il est possible d'executer les scripts modele.py et entrainement.py en utilisant les données d'entrainement extraites du Entrainement.zip
+The sript entrainement.py and modele.py are just used to explain how the model is computed, meanwhile the model is ever saved in the file /PFE_NMEA/datasets/model.sauv ( binary file containing a python object )
+
+To comput the model again, run the script entrainement.py, with the dataset in the file Entrainement.zip.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Executer le script main.py pour  : python3 main.py
