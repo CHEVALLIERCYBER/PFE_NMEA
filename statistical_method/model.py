@@ -2,7 +2,7 @@ def modele():
 
     dict2={}
     
-    chemin="/home/guillaume/Téléchargements/temp" # mettre le chemin du dossier PFE_NMEA-main
+    chemin="/home/guillaume/Téléchargements/temp" # put the path
 
     dict2["0nds"]={}
     dict2["10nds"]={}
