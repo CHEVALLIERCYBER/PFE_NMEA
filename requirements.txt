@@ -1,0 +1,6 @@
+numpy
+pynmea2
+jsonlib-python3
+python-math
+sockets
+sklearn
