@@ -159,6 +159,6 @@ def parameters(array_data):
 
     res={}
     res["mean"]=st.mean(array_data)
-    res["normal_deviation"]=math.sqrt(st.variance(array_data))
+    res["standard_deviation"]=math.sqrt(st.variance(array_data))
     return res
 
