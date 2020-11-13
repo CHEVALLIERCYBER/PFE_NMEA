@@ -21,7 +21,7 @@ import traitement as tr
 import pickle as pk
 import model as md
 
-def training(dict2):
+def training(dict):
 
 
     model={}
@@ -45,7 +45,7 @@ def training(dict2):
 
             dphi_l=tr.delta(phi_l,t_l) # compute the differences
             dg_l=tr.delta(g_l,t_l)
-            dcap_l=tr.delta(tr.cap(phi_l,g_l),t_l)
+            dheading_l=tr.delta(tr.heading(phi_l,g_l),t_l)
             d_distance=tr.delta_distance(phi_l,g_l)
 
 # we build a model with the statistical values of the features : variation of latitude, longitude, heading and distance
@@ -57,10 +57,10 @@ def training(dict2):
             model["sigma"][x][y]["g"] = tr.parameters(g_l)["standard_deviation"]
 
 
-            model["µ"][x][y]["heading"] = tr.parameters(dcap_l)["mean"]
+            model["µ"][x][y]["heading"] = tr.parameters(dheading_l)["mean"]
             model["µ"][x][y]["distance"] = tr.parameters(d_distance)["mean"]
 
-            model["sigma"][x][y]["heading"] = tr.parameters(dcap_l)["standard_deviation"]
+            model["sigma"][x][y]["heading"] = tr.parameters(dheading_l)["standard_deviation"]
             model["sigma"][x][y]["distance"] = tr.parameters(d_distance)["standard_deviation"]
 
     with open('model.sauv','wb' ) as model_sauv_file: 
