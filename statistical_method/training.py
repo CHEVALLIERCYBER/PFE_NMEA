@@ -50,18 +50,18 @@ def training(dict2):
 
 # we build a model with the statistical values of the features : variation of latitude, longitude, heading and distance
 
-            model["µ"][x][y]["phi"] = tr.parametres(dphi_l)["mean"]
-            model["µ"][x][y]["g"] = tr.parametres(dg_l)["mean"]    # met à jour le modele
+            model["µ"][x][y]["phi"] = tr.parameters(dphi_l)["mean"]
+            model["µ"][x][y]["g"] = tr.parameters(dg_l)["mean"]    # met à jour le modele
 
-            model["sigma"][x][y]["phi"] = tr.parametres(dphi_l)["normal_deviation"]
-            model["sigma"][x][y]["g"] = tr.parametres(g_l)["normal_deviation"]
+            model["sigma"][x][y]["phi"] = tr.parameters(dphi_l)["normal_deviation"]
+            model["sigma"][x][y]["g"] = tr.parameters(g_l)["normal_deviation"]
 
 
-            model["µ"][x][y]["heading"] = tr.parametres(dcap_l)["mean"]
-            model["µ"][x][y]["distance"] = tr.parametres(d_distance)["mean"]
+            model["µ"][x][y]["heading"] = tr.parameters(dcap_l)["mean"]
+            model["µ"][x][y]["distance"] = tr.parameters(d_distance)["mean"]
 
-            model["sigma"][x][y]["heading"] = tr.parametres(dcap_l)["normal_deviation"]
-            model["sigma"][x][y]["distance"] = tr.parametres(d_distance)["normal_deviation"]
+            model["sigma"][x][y]["heading"] = tr.parameters(dcap_l)["normal_deviation"]
+            model["sigma"][x][y]["distance"] = tr.parameters(d_distance)["normal_deviation"]
 
     with open('model.sauv','wb' ) as model_sauv_file: 
         pk.dump(model, model_sauv_file) # save the model in a binary file
