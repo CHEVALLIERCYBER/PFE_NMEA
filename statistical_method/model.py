@@ -1,3 +1,16 @@
+#------------------------------------------------------------------------
+#
+# @Author : EV2 CHEVALLIER 
+#
+# @Date : 06.11.20
+# @Location : École Navale / Chaire de Cyberdéfense des systèmes navals
+# @Project : Projet de Fin d'Études
+# @Subject : Real time detection of cyber anomalies upon a NMEA network by using machine learning methods
+#------------------------------------------------------------------------
+# @Title : Model
+#------------------------------------------------------------------------
+# @Description : # This programm loads the file of the training dataset in a python dictionary
+#------------------------------------------------------------------------
 def model():
 
     dict={}
