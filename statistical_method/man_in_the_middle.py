@@ -68,23 +68,30 @@ def mim():
 
             alea = rd.randint(0, 10)
 
-            if (alea == 1):  # alter randomly some sentences 
-                offset_lat = 0.05  # 10'  de lat
-                offset_lon = 0.0
-            elif (alea == 2):
-                offset_lat = 0.0
-                offset_lon = 0.05  # 10'  de lon
-            elif (alea == 3):
-                offset_lat = 0.05
-                offset_lon = 0.05
+            offset_lat,offset_lon=0,0
 
-            modif_lat = float(message.data[2]) + offset_lat
-            modif_lon = float(message.data[4]) + offset_lon
-            message.data[2] = str(modif_lat)
-            message.data[4] = str(modif_lon)
-            print("spoofing : offset_lon=", offset_lon, "offset_lat=", offset_lat)
-            flag_spoofing = True
-            nb_spoofing += 1
+            if (alea==1 or alea==2 or alea==3):
+
+                if (alea == 1):  # alter randomly some sentences
+                    offset_lat = 0.05  # 10'  de lat
+                    offset_lon = 0.0
+                elif (alea == 2):
+                    offset_lat = 0.0
+                    offset_lon = 0.05  # 10'  de lon
+                elif (alea == 3):
+                    offset_lat = 0.05
+                    offset_lon = 0.05
+
+                modif_lat = float(message.data[2]) + offset_lat
+                modif_lon = float(message.data[4]) + offset_lon
+                message.data[2] = str(modif_lat)
+                message.data[4] = str(modif_lon)
+                print("spoofing : offset_lon=", offset_lon, "offset_lat=", offset_lat)
+                flag_spoofing = True
+                nb_spoofing += 1
+
+            else:
+               pass
 
             trame = json.loads(tr.dissect(message))
             trame2 = {}
