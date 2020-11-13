@@ -4,7 +4,7 @@
 #
 # @Date : 06.11.20
 # @Location : École Navale / Chaire de Cyberdéfense des systèmes navals
-# @Cadre : Projet de Fin d'Études
+# @Project : Projet de Fin d'Études
 # @Subject : Real time detection of cyber anomalies upon a NMEA network by using machine learning methods
 #------------------------------------------------------------------------
 # @Title : Main
