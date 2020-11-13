@@ -137,7 +137,8 @@ def mim():
 
                 test = [l_phi, l_g, l_t, l_v, heading_test]
 
-                spoofing = pr1.prediction_v1(test, model)
+               # spoofing = pr1.prediction_v1(test, model)
+                spoofing = pr2.prediction_v2(test, model)
                 print("spoofing : ", spoofing)
                 if flag_spoofing:
                     l_trame.pop()  # we get out the spoofed sentence
