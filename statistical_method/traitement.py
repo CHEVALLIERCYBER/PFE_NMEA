@@ -4,7 +4,7 @@
 #
 # @Date : 06.11.20
 # @Location : École Navale / Chaire de Cyberdéfense des systèmes navals
-# @Cadre : Projet de Fin d'Études
+# @Project : Projet de Fin d'Études
 # @Subject : # Real time detection of cyber anomalies upon a NMEA network by using machine learning methods
 #------------------------------------------------------------------------
 # @Title : useful functions
@@ -155,10 +155,10 @@ def speed(l_phi,l_g,l_t):
             speed.append(0)
     return speed
 
-def parametres(array_data):
+def parameters(array_data):
 
     res={}
-    res["moyenne"]=st.mean(array_data)
-    res["ecart-type"]=math.sqrt(st.variance(array_data))
+    res["mean"]=st.mean(array_data)
+    res["normal_deviation"]=math.sqrt(st.variance(array_data))
     return res
 
