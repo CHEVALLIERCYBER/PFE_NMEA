@@ -1,28 +1,44 @@
+#------------------------------------------------------------------------
+#
+# @Author : EV2 CHEVALLIER 
+#
+# @Date : 06.11.20
+# @Location : École Navale / Chaire de Cyberdéfense des systèmes navals
+# @Project : Projet de Fin d'Études
+# @Subject : Real time detection of cyber anomalies upon a NMEA network by using machine learning methods
+#------------------------------------------------------------------------
+# @Title : Prediction
+#------------------------------------------------------------------------
+# @Description : # This programm predict if a spoofing happens, using the following features : the difference of latitude and longitude 
+
+# These test are real time
+#------------------------------------------------------------------------
+
 import traitement as tr
 import sklearn as sk
 
-def prediction(test,modele):  #recoit en parametre une liste de listes de valeurs de phi,g,t et le modele calculé par la fonction entrainement
+def prediction(test,model):  # test is a list of liste containing some values of latitude, longitude, and time 
 
 	phi_test=test[0]
 	g_test=test[1]
 	t_test=test[2]
-	vitesse_test=test[3]
+	speed_test=test[3]
 	cap_test=test[4]
-	delta_phi_test=tr.delta(phi_test,t_test) # ecarts successifs en minutes de phi 
-	delta_g_test=tr.delta(g_test,t_test)     # ----------------- en minutes de g
+	delta_phi_test=tr.delta(phi_test,t_test) # successive differences  in minutes of latitude 
+	delta_g_test=tr.delta(g_test,t_test)     # ---------------------   in minutes of longitude
 
-	resultat=[] # estimation de Z=(X-µ)/sigma
-	resultat_leurrage=[] # True si leurrage: x>3 ou y>3
+	resultat=[] # estimation of Z=(X-µ)/sigma
+	resultat_spoofing=[] # True if spoofing : x>3 ou y>3
 
-	for i in range(len(cap_test)-1): # on parcourt la liste des points
+	for i in range(len(cap_test)-1): # for all the points
 
-		cap=cap_test[i]/60 # en degres
+		cap=cap_test[i]/60 # in degrees
 		vitesse=vitesse_test[i]
 
 
-		if (vitesse < 15 and vitesse>=5):   # la vitesse autour de  10 nds
+		if (vitesse < 15 and vitesse>=5):   # speed around 10 kts
 
-            # on différencie selon le cap
+            # difference of traitement according to the heading
 
 			if (cap >= 22.5) and (cap < 67.5): # 45
 
@@ -64,9 +80,7 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
 				x=(abs(delta_phi_test[i]-modele["µ"]["10nds"]["0"]["phi"])/modele["sigma"]["10nds"]["0"]["phi"])
 				y=(abs(delta_g_test[i]-modele["µ"]["10nds"]["0"]["g"])/modele["sigma"]["10nds"]["0"]["g"])
 
-		elif (vitesse < 25 and vitesse>=15):    # vitesse autour de  20 nds
-
-            # on différencie selon le cap
+		elif (vitesse < 25 and vitesse>=15):    # speed around 10 kts
             
 			if (cap >= 22.5) and (cap < 67.5): # 45
 
@@ -108,12 +122,12 @@ def prediction(test,modele):  #recoit en parametre une liste de listes de valeur
 				x=(abs(delta_phi_test[i]-modele["µ"]["20nds"]["0"]["phi"])/modele["sigma"]["20nds"]["0"]["phi"])
 				y=(abs(delta_g_test[i]-modele["µ"]["20nds"]["0"]["g"])/modele["sigma"]["20nds"]["0"]["g"])
 
-		elif (vitesse < 5): # vitesse presque nulle ????
+		elif (vitesse < 5): # speed around 0 kts
 
 			x=(abs(delta_phi_test[i]-modele["µ"]["0nds"]["all"]["phi"])/modele["sigma"]["0nds"]["all"]["phi"])
 			y=(abs(delta_g_test[i]-modele["µ"]["0nds"]["all"]["g"])/modele["sigma"]["0nds"]["all"]["g"])
            
-		else: # vitesse > 25
+		else: # vitesse > 25 #speed around 10 kts
 
 			if (cap >= 22.5) and (cap < 67.5): # 45
 
