@@ -10,7 +10,7 @@
 #------------------------------------------------------------------------
 # @Title : Training
 #------------------------------------------------------------------------
-# @Description : # This programm get the training dataset, extract the interesting features ( mean and normal deviation of variations of latitude, 
+# @Description : # This programm get the training dataset, extract the interesting features ( mean and standard deviation of variations of latitude, 
 # longitude, heading and distance )
 # and put it in a python dictionnary and save it in a binary file with the pickle module.
 
@@ -53,15 +53,15 @@ def training(dict2):
             model["µ"][x][y]["phi"] = tr.parameters(dphi_l)["mean"]
             model["µ"][x][y]["g"] = tr.parameters(dg_l)["mean"]    # met à jour le modele
 
-            model["sigma"][x][y]["phi"] = tr.parameters(dphi_l)["normal_deviation"]
-            model["sigma"][x][y]["g"] = tr.parameters(g_l)["normal_deviation"]
+            model["sigma"][x][y]["phi"] = tr.parameters(dphi_l)["standard_deviation"]
+            model["sigma"][x][y]["g"] = tr.parameters(g_l)["standard_deviation"]
 
 
             model["µ"][x][y]["heading"] = tr.parameters(dcap_l)["mean"]
             model["µ"][x][y]["distance"] = tr.parameters(d_distance)["mean"]
 
-            model["sigma"][x][y]["heading"] = tr.parameters(dcap_l)["normal_deviation"]
-            model["sigma"][x][y]["distance"] = tr.parameters(d_distance)["normal_deviation"]
+            model["sigma"][x][y]["heading"] = tr.parameters(dcap_l)["standard_deviation"]
+            model["sigma"][x][y]["distance"] = tr.parameters(d_distance)["standard_deviation"]
 
     with open('model.sauv','wb' ) as model_sauv_file: 
         pk.dump(model, model_sauv_file) # save the model in a binary file
