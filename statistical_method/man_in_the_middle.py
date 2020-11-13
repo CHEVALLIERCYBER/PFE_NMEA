@@ -22,7 +22,8 @@ import random as rd  # internal modules
 import pickle as pk
 
 import traitement as tr  # external modules
-import prediction as pr
+import prediction_v1 as pr1
+import prediction_v2 as pr2
 
 N = 102  # evaluation of 100 sentences, the two first sentences are ignored
 
@@ -136,7 +137,7 @@ def mim():
 
                 test = [l_phi, l_g, l_t, l_v, heading_test]
 
-                spoofing = pr.prediction(test, model)
+                spoofing = pr1.prediction_v1(test, model)
                 print("spoofing : ", spoofing)
                 if flag_spoofing:
                     l_trame.pop()  # we get out the spoofed sentence
