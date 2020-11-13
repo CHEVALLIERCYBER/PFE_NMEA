@@ -9,7 +9,7 @@
 #------------------------------------------------------------------------
 # @Title : useful functions
 #------------------------------------------------------------------------
-# @Description : # This programm implement some useful functions : statistic calculations, opening of a json file, difference beetwen two lists... 
+# @Description : # This programm implement some useful functions : statistic calculations, opening of a json file, difference beetwen two lists...
 #------------------------------------------------------------------------
 
 import json
@@ -19,8 +19,8 @@ import statistics as st
 epsilon=0.0000000000001
 
 def set_path():
-    chemin="/home/guillaume/PFE/pythonProject/PFE_NMEA-main/" # put the correct path
-    return chemin
+    path="/home/guillaume/PFE/pythonProject/PFE_NMEA-main/" # put the correct path
+    return path
 
 def dissect(messages): # open a NMEA message formated with the python librairy pynmea2
     dico = []
@@ -28,50 +28,50 @@ def dissect(messages): # open a NMEA message formated with the python librairy p
         dico.append((messages.fields[i][1], messages.data[i]))
 
     dico = dict(dico)
-    return json.dumps(dico) # 
+    return json.dumps(dico) #
 
 
 def load(file):  # open a json file containing NMEA sentences
     list_phi = []
     list_g = []
     list_t = []
-    list_vitesse=[]
-    list_cap=[]
+    list_speed=[]
+    list_heading=[]
 
     resultat=[[]]
     for line in file:
-        trame = json.loads(line)
+        sentence = json.loads(line)
 
-        if str(trame['status'])=="A":
+        if str(sentence['status'])=="A":
 
-            list_phi.append(float(trame["lat"]))
-            list_g.append(float(trame["lon"]))
-            list_t.append(float(trame["timestamp"]))
-            list_vitesse.append(float(trame["spd_over_grnd"]))
-            list_cap.append(float(trame["true_course"]))
+            list_phi.append(float(sentence["lat"]))
+            list_g.append(float(sentence["lon"]))
+            list_t.append(float(sentence["timestamp"]))
+            list_speed.append(float(sentence["spd_over_grnd"]))
+            list_heading.append(float(sentence["true_course"]))
 
         else:
             list_phi.append(0)
             list_g.append(0)
             list_t.append(0)
-            list_vitesse.append(0)
-            list_cap.append(0)
+            list_speed.append(0)
+            list_heading.append(0)
 
 
     resultat.append(list_phi)
     resultat.append(list_g)
     resultat.append(list_t)
-    resultat.append(list_vitesse)
-    resultat.append(list_cap)
+    resultat.append(list_speed)
+    resultat.append(list_heading)
 
     resultat.pop(0)
-    return resultat 
+    return resultat
 
 def delta(liste,list_t):  # take a list of latitude or longitude and a list of time
     delta_liste = []
     for i in (range(len(liste) - 1)):
         if (list_t[i + 1] - list_t[i]) !=0:
-            delta_liste.append( (liste[i + 1] - liste[i]) / (list_t[i + 1] - list_t[i]))  
+            delta_liste.append( (liste[i + 1] - liste[i]) / (list_t[i + 1] - list_t[i]))
         else:
             delta_liste.append(0)
     return delta_liste
@@ -84,31 +84,31 @@ def delta_distance(l_phi,l_g): # return the list of the distances beetwen succes
         delta_d.append(d)
     return delta_d
 
-def cap(l_phi,l_g):  # compute the list of the headings
+def heading(l_phi,l_g):  # compute the list of the headings
 
-    cap=[]
+    heading=[]
 
     for i in range(len(l_phi)-1):
 
         if abs(l_phi[i+1]-l_phi[i])<epsilon and l_g[i+1]<l_g[i]:
             cv=90
-            cap.append(60.*cv)
+            heading.append(60.*cv)
 
         elif abs(l_phi[i+1]-l_phi[i])<epsilon and l_g[i+1]>l_g[i]:
             cv=270
-            cap.append(60.*cv)
+            heading.append(60.*cv)
 
         elif l_phi[i+1]>l_phi[i] and abs(l_g[i+1]-l_g[i])<epsilon:
             cv=0
-            cap.append(60.*cv)
+            heading.append(60.*cv)
 
         elif (l_phi[i+1]<l_phi[i] and abs(l_g[i+1]-l_g[i])<epsilon):
             cv=180
-            cap.append(60.*cv)
+            heading.append(60.*cv)
 
         elif (abs(l_phi[i+1]<l_phi[i])<epsilon and abs(l_g[i+1]-l_g[i])<epsilon):
             cv=0
-            cap.append(60.*cv)
+            heading.append(60.*cv)
 
         else:
             cos_phi_m = math.cos(0.5 * (l_phi[i + 1] + l_phi[i]))
@@ -120,21 +120,21 @@ def cap(l_phi,l_g):  # compute the list of the headings
 
             if (l_phi[i+1]>l_phi[i] and l_g[i+1]<l_g[i]):
                 cv=90-a
-                cap.append(60.*cv) # cap en minutes
+                heading.append(60.*cv) # heading en minutes
 
             elif (l_phi[i+1]>l_phi[i] and l_g[i+1]>l_g[i]):
                 cv=270+a
-                cap.append(60.*cv)
+                heading.append(60.*cv)
 
             elif (l_phi[i+1]<l_phi[i] and l_g[i+1]>l_g[i]):
                 cv=270-a
-                cap.append(60.*cv)
+                heading.append(60.*cv)
 
             else: #l_phi[i+1]>l_phi[i] and l_g[i+1]<l_g[i]:
                 cv=90+a
-                cap.append(60.*cv)
+                heading.append(60.*cv)
 
-    return cap
+    return heading
 
 def speed(l_phi,l_g,l_t):
 
