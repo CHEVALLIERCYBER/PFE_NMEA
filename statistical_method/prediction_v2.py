@@ -1,74 +1,74 @@
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 #
-# @Auteurs : EV2 CHEVALLIER
+# @Author : EV2 CHEVALLIER
 #
 # @Date : 06.11.20
-# @Lieu : École Navale / Chaire de Cyberdéfense des systèmes navals
-# @Cadre : Projet de Fin d'Études
-# @Sujet : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
+# @Location : École Navale / Chaire de Cyberdéfense des systèmes navals
+# @Project : Projet de Fin d'Études
+# @Subject : # Détection temps-réel d’anomalies cyber # sur un réseau NMEA par l’utilisation de # techniques d’apprentissage automatique.
 #
-#------------------------------------------------------------------------
-# @Titre : Prediction de leurrage
-#------------------------------------------------------------------------
-# @Description : # Ce programme recoit une liste de données à tester ( sous la forme de listes de latitudes, longitudes et temps ) et le modele qui est un dictionnaire contenant
-# les paramètres statistiques des features suivants : variations de distance (dD) entre deux points et variations de cap (dC) entre deux points, et ce, en focntions de la vitesse du
-# porteur.
-# Il calcule ensuite les features(dC,dD) sur les données du jeu de test et calcule les variables réduite w= (dC-µ)/sigma et z=(dD-µ)/sigma
-# Si w>3 ou z>3 on considere qu'il y a leurrage.
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+# @Title : Prediction of spoofing
+# ------------------------------------------------------------------------
+# @Description : # This programm get a list of points ( list of latitude, longitude, time ) to test and the model that is a dictionary with statistical parameters
+# of the following features : variations of distance (dD) beetwen two points and  variations of  heading (dC) 
+# It computes the features(dC,dD) upon the dataset to test and compte the reduced varibles w= (dC-µ)/sigma et z=(dD-µ)/sigma
+# if w>3 or z>3 we consider there is a spoofing 
+# ------------------------------------------------------------------------
 
 import traitement as tr
 import sklearn as sk
 
-def prediction(test,modele):  #recoit en parametre une liste de listes de valeurs de phi,g,t et le modele calculé par la fonction entrainement
 
-	phi_test=test[0]
-	g_test=test[1]
-	t_test=test[2]
-	vitesse_test=test[3]
-	cap_test=test[4]
+def prediction(test,model):  
+    phi_test = test[0]
+    g_test = test[1]
+    t_test = test[2]
+    speed_test = test[3]
+    heading_test = test[4]
 
-	delta_cap_test=tr.delta(cap_test,t_test) # delta en minutes de cap
-	delta_distance_test=tr.delta_distance(phi_test,g_test) # delta de distances en yards
+    delta_heading_test = tr.delta(heading_test, t_test)  # delta in minutes of heading
+    delta_distance_test = tr.delta_distance(phi_test, g_test)  # delta of distances in yards
 
-	resultat=[] 
-	detection_leurrage=[] # True si leurrage: w>3 ou z>3
+    resultat = []
+    detection_spoofing = []  # True if spoofing: w>3 ou z>3
 
-	for i in range(len(cap_test)-1): # on parcourt la liste des points
+    for i in range(len(heading_test) - 1): 
 
-		cap=cap_test[i]/60 # en degres
-		vitesse=vitesse_test[i]
+        heading = heading_test[i] / 60  # in degrees
+        speed = speed_test[i]
 
-		if (vitesse < 15 and vitesse>=5): # la vitesse autour de  10 nds
-		
-			w=(abs(delta_cap_test[i]-modele["µ"]["10nds"]["0"]["cap"])/modele["sigma"]["10nds"]["0"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["10nds"]["0"]["distance"]) / modele["sigma"]["10nds"]["0"]["cap"])
-            
-		elif (vitesse < 25 and vitesse>=15):    # vitesse autour de  20 nds
+        if (speed < 15 and speed >= 5):  #  speed around  10 kts
 
-			w=(abs(delta_cap_test[i]-modele["µ"]["20nds"]["0"]["cap"])/modele["sigma"]["20nds"]["0"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["20nds"]["0"]["distance"]) / modele["sigma"]["20nds"]["0"]["distance"])
+            w = (abs(delta_heading_test[i] - model["µ"]["10kts"]["0"]["heading"]) / model["sigma"]["10kts"]["0"]["heading"])
+            z = (abs(delta_distance_test[i] - model["µ"]["10kts"]["0"]["distance"]) / model["sigma"]["10kts"]["0"][
+                "heading"])
 
-		elif (vitesse < 5): # vitesse presque nulle 
+        elif (speed < 25 and speed >= 15):  # speed around  20 kts
 
-			w = (abs(delta_cap_test[i] - modele["µ"]["0nds"]["all"]["cap"]) / modele["sigma"]["0nds"]["all"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["0nds"]["0"]["distance"]) / modele["sigma"]["0nds"]["0"]["distance"])
+            w = (abs(delta_heading_test[i] - model["µ"]["20kts"]["0"]["heading"]) / model["sigma"]["20kts"]["0"]["heading"])
+            z = (abs(delta_distance_test[i] - model["µ"]["20kts"]["0"]["distance"]) / model["sigma"]["20kts"]["0"][
+                "distance"])
 
-		else: # vitesse > 25
+        elif (speed < 5):  # speed around 0 kts
 
-			w = (abs(delta_cap_test[i] - modele["µ"]["0nds"]["all"]["cap"]) / modele["sigma"]["0nds"]["all"]["cap"])
-			z = (abs(delta_distance_test[i] - modele["µ"]["30nds"]["0"]["distance"]) / modele["sigma"]["30nds"]["0"]["distance"])
+            w = (abs(delta_heading_test[i] - model["µ"]["0kts"]["all"]["heading"]) / model["sigma"]["0kts"]["all"]["heading"])
+            z = (abs(delta_distance_test[i] - model["µ"]["0kts"]["0"]["distance"]) / model["sigma"]["0kts"]["0"][
+                "distance"])
 
-		if (w>3 or z> 3):
-			leurrage=True
-		else:
-			leurrage=False
-                
-		resultat.append(w)
-		resultat.append(z)
-		detection_leurrage.append(leurrage)
+        else:  # speed > 25
 
-            
-    #print ("resultat : ",resultat)
+            w = (abs(delta_heading_test[i] - model["µ"]["0kts"]["all"]["heading"]) / model["sigma"]["0kts"]["all"]["heading"])
+            z = (abs(delta_distance_test[i] - model["µ"]["30kts"]["0"]["distance"]) / model["sigma"]["30kts"]["0"][
+                "distance"])
 
-	return [leurrage,resultat]
+        if (w > 3 or z > 3):
+            spoofing = True
+        else:
+            spoofing = False
+
+        resultat.append(w)
+        resultat.append(z)
+        detection_spoofing.append(spoofing)
+
+    return [spoofing, resultat]
