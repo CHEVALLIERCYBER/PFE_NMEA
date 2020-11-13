@@ -68,4 +68,4 @@ def training(dict2):
 
     return model
 
-entrainement(md.model())
+training(md.model())
